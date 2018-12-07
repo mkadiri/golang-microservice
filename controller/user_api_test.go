@@ -25,7 +25,7 @@ func TestGetUsers(t *testing.T) {
 	CheckTestResponseCode(t, http.StatusOK, response.Code)
 }
 
-func TestAddModules(t *testing.T) {
+func TestAddUsers(t *testing.T) {
 	modulesJson, err := json.Marshal(users)
 
 	if err != nil {
