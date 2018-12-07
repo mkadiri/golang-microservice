@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"bytes"
-	"encoding/json"
 	"github.com/mkadiri/golang-microservice/model"
 	"net/http"
 	"testing"
@@ -25,24 +23,24 @@ func TestGetUsers(t *testing.T) {
 	CheckTestResponseCode(t, http.StatusOK, response.Code)
 }
 
-func TestAddUsers(t *testing.T) {
-	modulesJson, err := json.Marshal(users)
-
-	if err != nil {
-		t.Errorf("Cannot encode to JSON")
-	}
-
-	req, _ := http.NewRequest("PUT", "/users", bytes.NewBuffer(modulesJson))
-	response := ExecuteTestRequest(req)
-
-	CheckTestResponseCode(t, http.StatusOK, response.Code)
-
-	// json.NewEncoder(w).Encode() adds an extra line (\n), we should do the same here when making a comparison
-	modulesJsonString := string(modulesJson) + "\n"
-	body := response.Body.String()
-
-	if body != modulesJsonString {
-		t.Errorf("Expected %s", modulesJsonString)
-		t.Errorf("Got %s", body)
-	}
-}
+//func TestAddUsers(t *testing.T) {
+//	modulesJson, err := json.Marshal(users)
+//
+//	if err != nil {
+//		t.Errorf("Cannot encode to JSON")
+//	}
+//
+//	req, _ := http.NewRequest("PUT", "/users", bytes.NewBuffer(modulesJson))
+//	response := ExecuteTestRequest(req)
+//
+//	CheckTestResponseCode(t, http.StatusOK, response.Code)
+//
+//	// json.NewEncoder(w).Encode() adds an extra line (\n), we should do the same here when making a comparison
+//	modulesJsonString := string(modulesJson) + "\n"
+//	body := response.Body.String()
+//
+//	if body != modulesJsonString {
+//		t.Errorf("Expected %s", modulesJsonString)
+//		t.Errorf("Got %s", body)
+//	}
+//}
