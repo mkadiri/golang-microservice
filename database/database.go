@@ -36,5 +36,5 @@ func getDatabaseSourceName() string {
 	port := os.Getenv("MYSQL_PORT")
 	database := os.Getenv("MYSQL_DATABASE")
 
-	return user + ":" + pass + "@tcp(" + host + ":" + port + ")/" + database
+	return user + ":" + pass + "@tcp(" + host + ":" + port + ")/" + database + "?parseTime=true"
 }
