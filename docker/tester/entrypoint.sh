@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Check if database is running"
+
 while ! mysqladmin ping -h $MYSQL_HOST -u $MYSQL_USER -P $MYSQL_PORT --password=$MYSQL_PASSWORD --silent; do
     echo "Waiting for $MYSQL_HOST:$MYSQL_PORT to wake up"
     sleep 5
@@ -29,7 +31,9 @@ done
 
 cd $PROJECT_URL
 
+go get
+
 echo "Run tests"
-go test ./...
+go test -v ./...
 
 echo "Finished"

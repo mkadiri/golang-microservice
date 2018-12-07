@@ -21,3 +21,15 @@ to access service to go
 
 #### DEV mode
 Setting `MODE=DEV` will enable dev fixtures to be run (seed data)
+
+### Run the app locally
+`docker-compose up mysql`
+
+in goland 
+- go to main.go
+- press play button
+- if not working as expected edit `go build main.go` config
+- add env variables 
+    - MYSQL_HOST=localhost
+    - MYSQL_POST=3306
+    .... same as docker-compose.yml
