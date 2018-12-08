@@ -29,9 +29,9 @@ func TestAddUsers(t *testing.T) {
 	}
 
 	req, _ := http.NewRequest("PUT", "/users", bytes.NewBuffer(modulesJson))
-	response := ExecuteTestRequest(req)
+	response := executeRequest(req)
 
-	CheckTestResponseCode(t, http.StatusOK, response.Code)
+	checkResponseCode(t, http.StatusOK, response.Code)
 
 	// json.NewEncoder(w).Encode() adds an extra line (\n), we should do the same here when making a comparison
 	modulesJsonString := string(modulesJson) + "\n"
@@ -48,7 +48,7 @@ func TestGetUsers(t *testing.T) {
 
 	req, _ := http.NewRequest("GET", "/users", nil)
 
-	response := ExecuteTestRequest(req)
+	response := executeRequest(req)
 
-	CheckTestResponseCode(t, http.StatusOK, response.Code)
+	checkResponseCode(t, http.StatusOK, response.Code)
 }
