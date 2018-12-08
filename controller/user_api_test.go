@@ -20,6 +20,8 @@ var users = []model.User {
 }
 
 func TestAddUsers(t *testing.T) {
+	database.Db.Exec("truncate table user")
+
 	modulesJson, err := json.Marshal(users)
 
 	if err != nil {
@@ -39,11 +41,11 @@ func TestAddUsers(t *testing.T) {
 		t.Errorf("Expected %s", modulesJsonString)
 		t.Errorf("Got %s", body)
 	}
-
-	database.Db.Exec("truncate table user")
 }
 
 func TestGetUsers(t *testing.T) {
+	database.Db.Exec("truncate table user")
+
 	req, _ := http.NewRequest("GET", "/users", nil)
 
 	response := ExecuteTestRequest(req)
