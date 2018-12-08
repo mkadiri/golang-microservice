@@ -3,6 +3,7 @@ package controller
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/mkadiri/golang-microservice/database"
 	"github.com/mkadiri/golang-microservice/model"
 	"net/http"
 	"testing"
@@ -38,6 +39,8 @@ func TestAddUsers(t *testing.T) {
 		t.Errorf("Expected %s", modulesJsonString)
 		t.Errorf("Got %s", body)
 	}
+
+	database.Db.Exec("truncate table user")
 }
 
 func TestGetUsers(t *testing.T) {
