@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
     mkadiri-golang-microservice:
         image: mkadiri/golang-microservice
@@ -21,5 +21,13 @@ services:
             - 3307:3306
         environment:
             - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - mysql-data:/var/lib/mysql
         command: --default-authentication-plugin=mysql_native_password
         restart: always
+volumes:
+    mysql-data:
+networks:
+    my-app:
+        name: my-app
+        driver: bridge
