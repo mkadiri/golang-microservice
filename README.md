@@ -32,4 +32,4 @@ in goland
 - add env variables 
     - MYSQL_HOST=localhost
     - MYSQL_PORT=3307
-    - .... the rest should be the same as docker-compose.yml
+    - the rest should be the same as docker-compose.yml
