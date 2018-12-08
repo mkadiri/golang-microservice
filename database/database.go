@@ -27,14 +27,25 @@ func init() {
 	Db.SetMaxIdleConns(0)
 	Db.SetMaxOpenConns(1)
 	Db.SetConnMaxLifetime(time.Minute * 5)
+
+	//todo: add test
 }
 
 func getDatabaseSourceName() string {
-	user := os.Getenv("MYSQL_USER")
-	pass := os.Getenv("MYSQL_PASSWORD")
-	host := os.Getenv("MYSQL_HOST")
-	port := os.Getenv("MYSQL_PORT")
-	database := os.Getenv("MYSQL_DATABASE")
+	config := map[string]string{
+		"MYSQL_HOST": os.Getenv("MYSQL_HOST"),
+		"MYSQL_PORT": os.Getenv("MYSQL_PORT"),
+		"MYSQL_USER": os.Getenv("MYSQL_USER"),
+		"MYSQL_PASSWORD": os.Getenv("MYSQL_PASSWORD"),
+		"MYSQL_DATABASE": os.Getenv("MYSQL_DATABASE"),
+	}
 
-	return user + ":" + pass + "@tcp(" + host + ":" + port + ")/" + database + "?parseTime=true"
+	for key, value := range config {
+		if len(value) == 0 {
+			log.Fatal("[" + key +"] needs to be set")
+		}
+	}
+
+	return config["MYSQL_USER"] + ":" + config["MYSQL_PASSWORD"] + "@tcp(" + config["MYSQL_HOST"] + ":" +
+		config["MYSQL_PORT"] + ")/" + config["MYSQL_DATABASE"] + "?parseTime=true"
 }
