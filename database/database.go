@@ -28,7 +28,12 @@ func init() {
 	Db.SetMaxOpenConns(1)
 	Db.SetConnMaxLifetime(time.Minute * 5)
 
-	//todo: add test
+	err = Db.Ping()
+
+	if err != nil {
+		_ = Db.Close()
+		log.Fatal("Unable to ping database, likely your config is incorrect")
+	}
 }
 
 func getDatabaseSourceName() string {
