@@ -31,5 +31,5 @@ in goland
 - if not working as expected edit `go build main.go` config
 - add env variables 
     - MYSQL_HOST=localhost
-    - MYSQL_POST=3306
-    .... same as docker-compose.yml
+    - MYSQL_PORT=3307
+    - .... the rest should be the same as docker-compose.yml
