@@ -23,6 +23,7 @@ echo "************************************************************"
 
 docker-compose -f docker-compose-test.yml up -d
 docker logs -f mkadiri-golang-tester
+docker rm -f mkadiri-golang-tester
 
 ########################################################################################################################
 

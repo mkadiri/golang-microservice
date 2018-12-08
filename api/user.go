@@ -1,4 +1,4 @@
-package controller
+package api
 
 import (
 	"github.com/mkadiri/golang-microservice/adaptor"

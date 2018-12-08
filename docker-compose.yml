@@ -14,7 +14,7 @@ services:
         ports:
             - 8181:8000
         restart: always
-    mkadiri-mysql:
+    mysql:
         image: mysql
         container_name: mkadiri-mysql
         ports:
