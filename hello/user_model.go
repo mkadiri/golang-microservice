@@ -1,4 +1,4 @@
-package model
+package hello
 
 import "time"
 

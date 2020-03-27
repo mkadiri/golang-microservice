@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/handlers"
-	"github.com/mkadiri/golang-microservice/api"
+	"github.com/mkadiri/golang-microservice/router"
 	"log"
 	"net/http"
 	"os"
@@ -16,7 +16,7 @@ func main() {
 	corsHandler := getCorsHandler()
 
 	srv := &http.Server{
-		Handler:      handlers.LoggingHandler(os.Stdout, corsHandler(api.Router)),
+		Handler:      handlers.LoggingHandler(os.Stdout, corsHandler(router.Router)),
 		Addr:         fmt.Sprintf(":%d", 8000),
 	}
 

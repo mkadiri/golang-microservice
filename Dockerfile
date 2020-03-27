@@ -1,3 +1,17 @@
+FROM golang:latest AS builder
+
+ENV \
+    GOPATH="/go" \
+    CGO_ENABLED=0
+
+RUN mkdir -p /go-bin
+COPY . /go/src/github.com/mkadiri/golang-microservice
+
+RUN cd /go/src/github.com/mkadiri/golang-microservice && \
+    go get && \
+    go build -v -o /go-bin/app
+
+
 FROM alpine:3.7
 
 RUN \
@@ -9,7 +23,7 @@ RUN \
 	curl -L https://github.com/golang-migrate/migrate/releases/download/v3.4.0/migrate.linux-amd64.tar.gz | tar xvz && \
 	mv migrate.linux-amd64 migrate
 
-COPY /bin/app /app
+COPY --from=builder /go-bin/app /app
 RUN chmod +x /app
 
 COPY database/migrations /migrations

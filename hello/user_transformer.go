@@ -1,12 +1,11 @@
-package adaptor
+package hello
 
 import (
 	"encoding/json"
-	"github.com/mkadiri/golang-microservice/model"
 	"net/http"
 )
 
-func RequestToUsers(r *http.Request) (users []model.User, err error) {
+func RequestToUsers(r *http.Request) (users []User, err error) {
 	decoder := json.NewDecoder(r.Body)
 	defer r.Body.Close()
 
