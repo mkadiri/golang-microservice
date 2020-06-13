@@ -12,7 +12,7 @@ import (
 var Db *sql.DB
 
 func init() {
-	fmt.Println("Init database")
+	fmt.Println("--- Init database")
 
 	var err error
 	Db, err = sql.Open("mysql", getDatabaseSourceName())

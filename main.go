@@ -42,6 +42,7 @@ func getCorsHandler() func(http.Handler) http.Handler {
 }
 
 func initRouter()  {
+	da
 	router.Init()
 	usr.InitRouter()
 	healthcheck.InitRouter()
