@@ -1,4 +1,4 @@
-package hello
+package usr
 
 import (
 	"github.com/mkadiri/golang-microservice/database"

@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/handlers"
+	"github.com/mkadiri/golang-microservice/healthcheck"
 	"github.com/mkadiri/golang-microservice/router"
+	"github.com/mkadiri/golang-microservice/usr"
 	"log"
 	"net/http"
 	"os"
@@ -11,17 +13,16 @@ import (
 )
 
 func main() {
-	fmt.Println("Starting server")
-
+	fmt.Println("--- Starting server")
 	corsHandler := getCorsHandler()
+	initRouter()
 
 	srv := &http.Server{
 		Handler:      handlers.LoggingHandler(os.Stdout, corsHandler(router.Router)),
 		Addr:         fmt.Sprintf(":%d", 8000),
 	}
 
-	fmt.Println("Listening")
-
+	fmt.Println("--- Listening")
 	err := srv.ListenAndServe()
 
 	if err != nil {
@@ -38,4 +39,10 @@ func getCorsHandler() func(http.Handler) http.Handler {
 		handlers.AllowedOrigins(allowedOrigins),
 		handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT", "OPTIONS"}),
 	)
+}
+
+func initRouter()  {
+	router.Init()
+	usr.InitRouter()
+	healthcheck.InitRouter()
 }

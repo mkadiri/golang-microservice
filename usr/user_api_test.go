@@ -1,10 +1,10 @@
-package router
+package usr
 
 import (
 	"bytes"
 	"encoding/json"
 	"github.com/mkadiri/golang-microservice/database"
-	"github.com/mkadiri/golang-microservice/hello"
+	"github.com/mkadiri/golang-microservice/router"
 	"net/http"
 	"testing"
 	"time"
@@ -13,13 +13,16 @@ import (
 // these numbers aren't random https://golang.org/src/time/format.go
 var dob, _ = time.Parse("2006-01-02", "1989-10-08")
 
-var users = []hello.User{
+var users = []User{
 	{Id: 1, FirstName: "james", LastName: "smith", DateOfBirth: dob},
 	{Id: 2, FirstName: "bruce", LastName: "wayne", DateOfBirth: dob},
 	{Id: 3, FirstName: "jeremy", LastName: "renner", DateOfBirth: dob},
 }
 
 func TestAddUsers(t *testing.T) {
+	router.Init()
+	InitRouter()
+
 	database.Db.Exec("truncate table user")
 
 	modulesJson, err := json.Marshal(users)
@@ -29,26 +32,19 @@ func TestAddUsers(t *testing.T) {
 	}
 
 	req, _ := http.NewRequest("PUT", "/users", bytes.NewBuffer(modulesJson))
-	response := ApiTestHelper{}.ExecuteRequest(req)
+	response := router.ApiTestHelper{}.ExecuteRequest(req)
 
-	ApiTestHelper{}.CheckResponseCode(t, http.StatusOK, response.Code)
-
-	// json.NewEncoder(w).Encode() adds an extra line (\n), we should do the same here when making a comparison
-	modulesJsonString := string(modulesJson) + "\n"
-	body := response.Body.String()
-
-	if body != modulesJsonString {
-		t.Errorf("Expected %s", modulesJsonString)
-		t.Errorf("Got %s", body)
-	}
+	router.ApiTestHelper{}.CheckResponseCode(t, http.StatusOK, response.Code)
+	router.ApiTestHelper{}.CheckBodyEqualsJson(t, modulesJson, response.Body)
 }
 
 func TestGetUsers(t *testing.T) {
+	router.Init()
+	InitRouter()
+
 	database.Db.Exec("truncate table user")
-
 	req, _ := http.NewRequest("GET", "/users", nil)
+	response := router.ApiTestHelper{}.ExecuteRequest(req)
 
-	response := ApiTestHelper{}.ExecuteRequest(req)
-
-	ApiTestHelper{}.CheckResponseCode(t, http.StatusOK, response.Code)
+	router.ApiTestHelper{}.CheckResponseCode(t, http.StatusOK, response.Code)
 }
